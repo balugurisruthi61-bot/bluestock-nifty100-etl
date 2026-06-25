@@ -1,0 +1,4 @@
+rule,severity,issue
+DQ-01,CRITICAL,Duplicate company_id
+DQ-02,CRITICAL,Duplicate company-year
+DQ-04,WARNING,Invalid assets
