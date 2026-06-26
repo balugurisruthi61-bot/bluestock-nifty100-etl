@@ -81,11 +81,10 @@ CREATE TABLE IF NOT EXISTS sectors (
 );
 
 
-CREATE TABLE IF NOT EXISTS stock_prices (
+CREATE TABLE IF NOT EXISTS stock_prices(
     id INTEGER PRIMARY KEY,
     company_id TEXT,
-    price REAL,
-    FOREIGN KEY(company_id) REFERENCES companies(id)
+    price REAL
 );
 
 

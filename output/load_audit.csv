@@ -1,0 +1,8 @@
+table,rows_loaded,file
+companies,92,data/companies.xlsx
+balance_sheet,1312,data/balancesheet.xlsx
+profitandloss,1276,data/profitandloss.xlsx
+cashflow,1187,data/cashflow.xlsx
+analysis,20,data/analysis.xlsx
+documents,1585,data/documents.xlsx
+prosandcons,16,data/prosandcons.xlsx

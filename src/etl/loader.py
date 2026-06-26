@@ -1,21 +1,51 @@
+import sqlite3
 import pandas as pd
+import os
 
-def normalize_year(year):
-    return str(year)[-4:]
 
-def normalize_ticker(ticker):
-    return str(ticker).strip().upper()
+conn = sqlite3.connect("nifty100.db")
 
-df = pd.read_excel("data/balancesheet.xlsx", header=1)
+conn.execute("PRAGMA foreign_keys = ON")
 
-print("Shape:", df.shape)
-print("\nColumns:")
-print(df.columns.tolist())
 
-print("\nFirst 5 Rows:")
-print(df.head())
+files = {
+    "companies": "data/companies.xlsx",
+    "balance_sheet": "data/balancesheet.xlsx",
+    "profitandloss": "data/profitandloss.xlsx",
+    "cashflow": "data/cashflow.xlsx",
+    "analysis": "data/analysis.xlsx",
+    "documents": "data/documents.xlsx",
+    "prosandcons": "data/prosandcons.xlsx"
+}
 
-df["year"] = df["year"].apply(normalize_year)
-df["company_id"] = df["company_id"].apply(normalize_ticker)
 
-print(df[["company_id", "year"]].head())
+audit = []
+
+
+for table, file in files.items():
+
+    df = pd.read_excel(file, header=1)
+
+    df.to_sql(
+        table,
+        conn,
+        if_exists="replace",
+        index=False
+    )
+
+    audit.append({
+        "table": table,
+        "rows_loaded": len(df),
+        "file": file
+    })
+
+
+pd.DataFrame(audit).to_csv(
+    "output/load_audit.csv",
+    index=False
+)
+
+
+print("Full Data Load Completed")
+
+conn.close()
